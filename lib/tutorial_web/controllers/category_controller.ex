@@ -1,6 +1,9 @@
 defmodule TutorialWeb.CategoryController do
   use TutorialWeb, :controller
   alias Tutorial.Categories
+  alias Tutorial.Categories.Category
+
+  action_fallback TutorialWeb.FallbackController
 
   def index(conn, _params) do
     categories = Categories.all()
@@ -15,11 +18,11 @@ defmodule TutorialWeb.CategoryController do
   end
 
   def create(conn, %{"category" => category}) do
-    {:ok, category} = Categories.create(category)
-
-    conn
-    |> put_status(:created)
-    |> put_resp_header("location", Routes.category_path(conn, :show, category))
-    |> render("show.json", category: category)
+    with {:ok, category} <- Categories.create(category) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.category_path(conn, :show, category))
+      |> render("show.json", category: category)
+    end
   end
 end
