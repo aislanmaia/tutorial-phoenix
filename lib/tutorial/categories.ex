@@ -5,4 +5,10 @@ defmodule Tutorial.Categories do
   def all do
     Repo.all(Category)
   end
+
+  def create(payload) do
+    payload
+    |> Category.changeset()
+    |> Repo.insert()
+  end
 end
