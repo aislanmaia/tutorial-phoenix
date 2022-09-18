@@ -1,0 +1,13 @@
+{
+  "skip_files": [
+    "lib/tutorial/application.ex",
+    "lib/tutorial_web/telemetry.ex",
+    "lib/tutorial.ex",
+    "lib/tutorial_web.ex",
+    "lib/tutorial_web/views/error_helpers.ex",
+    "test/support/conn_case.ex",
+    "test/support/data_case.ex"
+  ],
+  "treat_no_relevant_lines_as_covered": true,
+  "minimum_coverage": 95
+}
