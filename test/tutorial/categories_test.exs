@@ -14,8 +14,17 @@ defmodule Tutorial.CategoriesTest do
       payload = %{name: "Sport", description: "Some description"}
 
       assert {:ok, %Category{} = category} = Categories.create(payload)
-      assert category.name == payload.name
+      assert category.name == String.upcase(payload.name)
       assert category.description == payload.description
+    end
+
+    test "should throw an error when category name is already taken" do
+      payload = %{name: "Sport", description: "Some description"}
+
+      assert {:ok, _} = Categories.create(payload)
+      assert {:error, changeset} = Categories.create(payload)
+      assert "has already been taken" in errors_on(changeset).name
+      assert %{name: ["has already been taken"]} = errors_on(changeset)
     end
   end
 end

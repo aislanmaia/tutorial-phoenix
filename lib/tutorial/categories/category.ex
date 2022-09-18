@@ -21,6 +21,8 @@ defmodule Tutorial.Categories.Category do
   def changeset(module, attrs) do
     module
     |> cast(attrs, @fields)
+    |> update_change(:name, &String.upcase/1)
     |> validate_required(@fields)
+    |> unique_constraint(:name)
   end
 end
