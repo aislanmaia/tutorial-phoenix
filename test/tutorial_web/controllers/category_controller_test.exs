@@ -23,7 +23,7 @@ defmodule TutorialWeb.CategoryControllerTest do
 
       assert json_response(conn, 201) == body
 
-      assert %{"id" => id, "name" => _name, "description" => _description} =
+      assert %{"id" => _id, "name" => _name, "description" => _description} =
                json_response(conn, 201)
     end
 

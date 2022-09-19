@@ -1,6 +1,8 @@
 defmodule TutorialWeb.Router do
   use TutorialWeb, :router
 
+  alias TutorialWeb.AuthPlug
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -12,6 +14,10 @@ defmodule TutorialWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :auth do
+    plug AuthPlug
   end
 
   scope "/", TutorialWeb do
@@ -27,6 +33,13 @@ defmodule TutorialWeb.Router do
     get "/categories/:id", CategoryController, :show
     get "/categories", CategoryController, :index
     post "/categories", CategoryController, :create
+    post "/users", UserController, :create
+  end
+
+  scope "/api", TutorialWeb do
+    pipe_through [:api, :auth]
+
+    get "/users/:id", UserController, :show
   end
 
   # coveralls-ignore-start
